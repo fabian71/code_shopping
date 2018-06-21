@@ -13,15 +13,9 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'stock',
         'active'
     ];
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
     public function sluggable(): array
     {
         return [
@@ -29,5 +23,9 @@ class Product extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class);
     }
 }

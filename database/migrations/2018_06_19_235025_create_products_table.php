@@ -19,14 +19,14 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->text('description');
             $table->decimal('price');
-            $table->integer('stock')->default(0);
+            $table->integer('stock')->unsigned()->default(0);
             $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations
      *
      * @return void
      */
