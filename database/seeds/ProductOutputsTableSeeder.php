@@ -3,7 +3,7 @@
 use CodeShopping\Models\Product;
 use Illuminate\Database\Seeder;
 
-class ProductInputsTableSeeder extends Seeder
+class ProductOutputsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,12 +13,12 @@ class ProductInputsTableSeeder extends Seeder
     public function run()
     {
         $products = Product::all();
-        factory(\CodeShopping\Models\ProductInput::class, 200)
+        factory(\CodeShopping\Models\ProductOutput::class, 150)
             ->make()
-            ->each(function ($input) use($products){
+            ->each(function ($output) use($products){
                 $product = $products->random();
-                $input->product_id = $product->id;
-                $input->save();
+                $output->product_id = $product->id;
+                $output->save();
             });
     }
 }
