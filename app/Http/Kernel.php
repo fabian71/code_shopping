@@ -2,6 +2,7 @@
 
 namespace CodeShopping\Http;
 
+use CodeShopping\Http\Middleware\CorsMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 
@@ -20,6 +21,7 @@ class Kernel extends HttpKernel
         \CodeShopping\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \CodeShopping\Http\Middleware\TrustProxies::class,
+        CorsMiddleware::class
     ];
 
     /**
