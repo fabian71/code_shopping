@@ -1,0 +1,31 @@
+<form (submit)="submit()">
+  <modal (onHide)="hideModal($event)">
+    <div modal-title><h5>Novo Produto</h5></div>
+    <div modal-body>
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input [(ngModel)]="product.name" type="text" id="name" class="form-control" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea [(ngModel)]="product.description" class="form-control" id="description" name="description" cols="30" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Preço</label>
+        <input [(ngModel)]="product.price" type="number" id="price" class="form-control" name="price" required>
+      </div>
+
+      <div class="form-group form-check">
+        <input [(ngModel)]="product.active" type="checkbox" id="active" class="form-check-input" name="active" required>
+        <label for="active">Ativo?</label>
+      </div>
+
+    </div>
+    <div modal-footer>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      <button type="submit" class="btn btn-primary">Incluir</button>
+    </div>
+  </modal>
+</form>

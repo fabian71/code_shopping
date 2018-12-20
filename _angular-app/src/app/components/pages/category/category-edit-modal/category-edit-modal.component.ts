@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
+import {Category} from "../../../../models";
+import {CategoryHttpService} from "../../../../services/http/category-http.service";
 
 @Component({
   selector: 'category-edit-modal',
@@ -9,7 +11,7 @@ import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 })
 export class CategoryEditModalComponent implements OnInit {
 
-  category = {
+  category: Category = {
     name: '',
     active: true
   }
@@ -22,41 +24,35 @@ export class CategoryEditModalComponent implements OnInit {
 
     @ViewChild(ModalComponent) modal: ModalComponent;
 
-  constructor(private http: HttpClient) { }
+  constructor(private categoryHttp: CategoryHttpService) { }
 
   ngOnInit() {
   }
 
   @Input()
   set categoryId(value){
+      console.log(value)
     this._categoryId = value;
     if(this._categoryId){
-        const token = window.localStorage.getItem('token');
-        this.http.get<{ data: any }>(`http://localhost:8000/api/categories/${value}`,{
-            headers: {
-                'Authorization':`Bearer ${token}`
-            }
-        })
-            .subscribe((response) => {
-
-                this.category = response.data
-            })
+        this.categoryHttp
+            .get(this._categoryId)
+            .subscribe(category => this.category = category,
+                    responseError => {
+                        if(responseError.status == 401){
+                            this.modal.hide();
+                        }
+                    }
+                )
     }
 
   }
 
   submit(){
-        const token = window.localStorage.getItem('token');
-
-        this.http.put(`http://localhost:8000/api/categories/${this._categoryId}`, this.category, {
-            headers: {
-                'Authorization':`Bearer ${token}`
-            }
-        })
+       this.categoryHttp
+            .update(this._categoryId, this.category)
             .subscribe((category) => {
                 this.onSuccess.emit(category);
                 this.modal.hide();
-                //this.getCategories();
             }, error => this.onError.emit(error))
   }
 
