@@ -3,6 +3,7 @@
 namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Http\Controllers\Controller;
+use CodeShopping\Http\Filters\ProductInputFilter;
 use CodeShopping\Http\Requests\ProductInputRequest;
 use CodeShopping\Http\Resources\ProductInputResource;
 use CodeShopping\Models\ProductInput;
@@ -13,7 +14,9 @@ class ProductInputController extends Controller
 
     public function index()
     {
-        $inputs = ProductInput::with('product')->paginate();
+        $filter = app(ProductInputFilter::class);
+        $filterQuery = ProductInput::with('product')->filtered($filter);
+        $inputs = $filterQuery->paginate();
         return ProductInputResource::collection($inputs);
     }
 

@@ -5,6 +5,7 @@ namespace CodeShopping\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Mnabialek\LaravelEloquentFilter\Traits\Filterable;
 
 /**
  * CodeShopping\Models\Category
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
-    use Sluggable;
+    use Sluggable, Filterable;
     protected $fillable = ['name', 'active'];
 
     public function sluggable(): array
@@ -30,3 +31,5 @@ class Category extends Model
         return $this->belongsToMany(Product::class);
     }
 }
+
+//

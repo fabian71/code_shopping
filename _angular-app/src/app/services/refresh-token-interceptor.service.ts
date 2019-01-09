@@ -21,7 +21,6 @@ export class RefreshTokenInterceptorService implements HttpInterceptor{
             .handle(req)
             .pipe(
                 tap((event: HttpEvent<any>) => {
-                  console.log(event);
                   this.setNewTokenIfResponseValid(event)
                 }, (eventError: HttpEvent<any>) => {
                     this.setNewTokenIfResponseValid(eventError);

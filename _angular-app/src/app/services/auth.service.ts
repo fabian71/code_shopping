@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(private http:HttpClient) {
       const token = this.getToken();
-      this.setUserFromToekn(token);
+      this.setUserFromToken(token);
   }
 
   login(user: {email: string, password: string}):Observable<{token: string}>{
@@ -31,20 +31,27 @@ export class AuthService {
   }
 
   setToken(token: string){
-    this.setUserFromToekn(token);
-    token ? window.localStorage.setItem(TOKEN_KEY, token): window.localStorage.removeItem(TOKEN_KEY);
+        this.setUserFromToken(token);
+        //console.log('setToken');
+        //console.log(token);
+        token ? window.localStorage.setItem(TOKEN_KEY, token): window.localStorage.removeItem(TOKEN_KEY);
+
   }
 
-  private setUserFromToekn(token: string){
+  private setUserFromToken(token: string){
       const decodedPayload = new JwtHelperService().decodeToken(token);
+
       this.me = decodedPayload ? {
           id: decodedPayload.sub,
           name: decodedPayload.name,
           email: decodedPayload.email,
+          profile: decodedPayload.profile
       }: null;
   }
 
   getToken(): string | null{
+      //console.log('pega o token')
+      //console.log(window.localStorage.getItem(TOKEN_KEY));
     return window.localStorage.getItem(TOKEN_KEY)
   }
 
@@ -61,6 +68,10 @@ export class AuthService {
                   this.setToken(null);
               })
           );
+  }
+
+  getauthorizationHeader(){
+      return `Bearer ${this.getToken()}`;
   }
 
 

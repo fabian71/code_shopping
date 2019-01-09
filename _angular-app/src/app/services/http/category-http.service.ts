@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators'
 import {Category} from "../../models";
 import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 import {AuthService} from "../auth.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
@@ -12,11 +13,15 @@ import {AuthService} from "../auth.service";
 
 export class CategoryHttpService implements HttpResource<Category>{
 
-    private baseUrl = 'http://localhost:8000/api/categories';
+    //private baseUrl = 'http://localhost:8000/api/categories';
+
+    private baseUrl = `${environment.api.url}/categories`;
 
   constructor(private http:HttpClient, private authService: AuthService) { }
 
   list(searchParams: SearchParams): Observable<{data: Array<Category>, meta: any }>{
+
+        console.log('oii')
 
       const sParams = new SearchParamsBuilder(searchParams).makeObject();
 
@@ -27,6 +32,7 @@ export class CategoryHttpService implements HttpResource<Category>{
   }
 
   get(id: number): Observable<Category>{
+
       return this.http
           .get<{data: Category }>
       (`${this.baseUrl}/${id}`)
@@ -56,8 +62,7 @@ export class CategoryHttpService implements HttpResource<Category>{
   destroy(id: number): Observable<any> {
 
       return this.http
-          .delete<{data: Category }>
-          (`${this.baseUrl}/${id}`);
+          .delete<{data: Category}>(`${this.baseUrl}/${id}`);
 
   }
 

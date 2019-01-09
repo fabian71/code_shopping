@@ -12,12 +12,22 @@ import {environment} from "../../../environments/environment";
 
 export class ProductHttpService implements HttpResource<Product>{
 
-    private baseUrl = `${environment.api.url}/products`;
+    //private baseUrl = `${environment.api.url}/products`;
+
+    //private baseUrl = 'http://127.0.0.1:8282/api/products';
+    private baseUrl = environment.api.url+'/products';
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {
+
+
+
+  }
+
 
   list(searchParams: SearchParams): Observable<{data: Array<Product>, meta: any }>{
+
+
 
       const sParams = new SearchParamsBuilder(searchParams).makeObject();
       const params = new HttpParams({

@@ -31,7 +31,8 @@
       <td>
         <a href="javascript:void(0)" (click)="productEditService.showModalEdit(product.id)"><i class="fas fa-edit"></i></a> |
         <a href="javascript:void(0)" (click)="productDeleteService.showModalDelete(product.id)"><i class="fas fa-trash-alt"></i></a>
-        <a [routerLink]="['/products',product.id,'categories', 'list']"> Categorias</a>
+        <a [routerLink]="['/products',product.id,'categories', 'list']"> Categorias</a>|
+        <a [routerLink]="['/products',product.id,'photos', 'manager']"> Fotos</a>
 
       </td>
     </tr>

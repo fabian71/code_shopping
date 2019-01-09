@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   api: {
     protocol: 'http',
-    host: 'localhost:8000',
+    host: 'localhost:8282',
     get url(){
       return `${this.protocol}://${this.host}/api`
     }

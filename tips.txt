@@ -1,0 +1,7 @@
+
+
+rodar servidor angular
+ng serve --port=4242
+
+Matar servidor angular
+sudo lsof -t -i tcp:4242 | xargs kill -9
